@@ -2369,6 +2369,7 @@ fsfull()
       total += cc;
       fsblocks++;
     }
+	(void)fsblocks;
     printf("wrote %d bytes\n", total);
     close(fd);
     if(total == 0)
