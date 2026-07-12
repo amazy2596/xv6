@@ -26,3 +26,5 @@ barrier
 *.dSYM
 *.pcap
 TAGS
+__pycache__
+*.out
