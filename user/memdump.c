@@ -57,9 +57,55 @@ main(int argc, char *argv[])
   exit(0);
 }
 
+// i：将接下来的 4 字节数据打印为 32 位十进制整数。
+// p：将接下来的 8 字节数据打印为 64 位十六进制整数。
+// h：将接下来的 2 字节数据打印为 16 位十进制整数。
+// c：将接下来的 1 字节数据打印为 8 位 ASCII 字符。
+// s：接下来的 8 字节数据包含指向 C 字符串的 64 位指针；打印该字符串。
+// S：数据的其余部分包含以空字符结尾的 C 字符串的字节；打印该字符串。
+
 void
 memdump(char *fmt, char *data)
 {
   // Your code here.
 
+  int i;
+  for (i = 0; fmt[i] != '\0'; i++)
+  {
+	if (fmt[i] == 'i')
+	{
+		int *cur = (int *)data;
+		data += 4;
+		printf("%d", *cur);
+	}
+	else if (fmt[i] == 'p')
+	{
+		long long *cur = (long long *)data;
+		data += 8;
+		printf("%llx", *cur);
+	}
+	else if (fmt[i] == 'h')
+	{
+		short *cur = (short *)data;
+		data += 2;
+		printf("%d", *cur);
+	}
+	else if (fmt[i] == 'c')
+	{
+		printf("%c", *data);
+		data++;
+	}
+	else if (fmt[i] == 's')
+	{
+		char **cur = (char **)data;
+		data += 8;
+		printf("%s", *cur);
+	}
+	else if (fmt[i] == 'S')
+	{
+		printf("%s", data);
+		data += strlen(data) + 1;
+	}
+	printf("\n");
+  }
 }
