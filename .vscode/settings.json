@@ -1,9 +1,0 @@
-{
-  "files.exclude": {
-    "**/*.o": true,
-    "**/*.d": true,
-    "**/*.asm": true,
-    "**/*.sym": true,
-	"**/_*": true
-  }
-}
