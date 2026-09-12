@@ -1,0 +1,24 @@
+1. 查看 backtrace 的输出，是哪个函数调用了 syscall？
+答：usertrap 函数（位于 kernel/trap.c:68）。
+
+2. p->trapframe->a7 的值是多少？该值代表什么？
+答：p->trapframe->a7 的值为 0xf（十进制 15）。该值代表系统调用 SYS_open（定义在 kernel/syscall.h 中）。这是第一个用户程序 init（user/init.c）在 main 函数启动时执行的 open("console", O_RDWR)。在 user/init.asm 中可以看到在 ecall 陷入内核前执行了 li a7, 15。
+
+3. CPU 之前处于什么模式？
+答：User 模式（用户态 / U-mode）。
+依据：sstatus 寄存器中的 SPP（Supervisor Previous Privilege，第 8 位）为 0（1 代表 Supervisor 模式，0 代表 User 模式）。
+
+4. 写下内核发生 panic 处的汇编指令。哪个寄存器对应变量 num？
+答：
+发生 panic 处的汇编指令为：lw a3, 0(zero)
+变量 num 对应的寄存器为：a3。
+
+5. 为什么内核会崩溃？提示：看书中的图 3-3；地址 0 在内核地址空间中被映射了吗？上面的 scause 值是否确认了这一点？
+答：
+因为虚拟地址 0 没有映射到内核地址空间中（内核页表中没有针对地址 0 的有效映射，地址 0 属于未分配的无效地址）。当执行 lw 指令尝试从地址 0 读取数据时，MMU 无法完成地址翻译，触发了缺页异常。
+panic 时打印的 scause=0xd（十进制 13，在 RISC-V 特权级架构规范中对应 Load Page Fault，即读缺页异常）以及 stval=0x0（故障地址为 0）证实了这一点。
+
+6. 内核 panic 时正在运行的进程名称是什么？它的进程 ID (pid) 是多少？
+答：
+进程名称为："init"（p->name 为 "init"）
+进程 ID 为：1（p->pid 为 1）。
