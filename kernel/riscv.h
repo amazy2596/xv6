@@ -378,6 +378,7 @@ typedef uint64 *pagetable_t; // 512 PTEs
 
 
 #if defined(LAB_MMAP) || defined(LAB_PGTBL) || defined(LAB_COW)
+// 如果pte可读/可写/可执行, 即该页表项是叶子
 #define PTE_LEAF(pte) (((pte) & PTE_R) | ((pte) & PTE_W) | ((pte) & PTE_X))
 #endif
 

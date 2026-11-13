@@ -108,6 +108,7 @@ supercheck(char *end)
     pte_t pte = (pte_t) pgpte((void *) p);
     if(pte == 0)
       err("no pte");
+    // printf("addr 0x%lx: pte 0x%lx, last_pte 0x%lx\n", p, pte, last_pte);
     if ((uint64) last_pte != 0 && pte != last_pte) {
         err("pte different");
     }
