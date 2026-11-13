@@ -39,3 +39,4 @@ extern struct devsw devsw[];
 
 #define CONSOLE 1
 #define DBG 2
+#define STATS   3

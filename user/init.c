@@ -18,6 +18,7 @@ main(void)
 
   if(open("console", O_RDWR) < 0){
     mknod("console", CONSOLE, 0);
+    mknod("statistics", STATS, 0);
     open("console", O_RDWR);
   }
   mknod("dbg", DBG, 0);   // -1 if already exists, ignore
