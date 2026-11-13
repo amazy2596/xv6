@@ -277,6 +277,11 @@ ifeq ($(LAB),util)
 	UEXTRA += user/findtest.sh
 	UEXTRA += user/sixfive.txt
 	UPROGS += $U/_memdump
+	UPROGS += $U/_sleep
+	UPROGS += $U/_sixfive
+	UPROGS += $U/_find
+	UPROGS += $U/_pingpong
+	UPROGS += $U/_uptime
 endif
 
 
