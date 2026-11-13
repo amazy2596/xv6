@@ -20,6 +20,7 @@ main(void)
     mknod("console", CONSOLE, 0);
     open("console", O_RDWR);
   }
+  mknod("dbg", DBG, 0);   // -1 if already exists, ignore
   dup(0);  // stdout
   dup(0);  // stderr
 
