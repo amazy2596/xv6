@@ -250,7 +250,7 @@ userinit(void)
   release(&p->lock);
 }
 
-// Shrink user memory by n bytes.
+// Grow or shrink user memory by n bytes.
 // Return 0 on success, -1 on failure.
 int
 growproc(int n)
@@ -260,10 +260,12 @@ growproc(int n)
 
   sz = p->sz;
   if(n > 0){
+    // 增长：uvmalloc 分配 [sz, sz+n)
     if((sz = uvmalloc(p->pagetable, sz, sz + n, PTE_W)) == 0) {
       return -1;
     }
   } else if(n < 0){
+    // 缩减：uvmdealloc 释放 [sz+n, sz)
     sz = uvmdealloc(p->pagetable, sz, sz + n);
   }
   p->sz = sz;

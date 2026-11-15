@@ -118,6 +118,7 @@ supercheck(char *end)
     last_pte = pte;
   }
 
+  // 在 s 开始的 2MB 区域内，每隔 4KB 写一个整数
   for(int i = 0; i < 512 * PGSIZE; i += PGSIZE){
     *(int*)(s+i) = i;
   }
@@ -140,12 +141,12 @@ superpg_fork()
   if (end == 0 || end == SBRK_ERROR)
     err("sbrk failed");
 
-  // check if parent has super pages
+  // 检查父级是否有超级页
   supercheck(end);
   if((pid = fork()) < 0) {
     err("fork");
   } else if(pid == 0) {
-    // check if child's address space has super pages
+    // 检查孩子的地址空间是否有超级页面
     supercheck(end);
     exit(0);
   } else {
